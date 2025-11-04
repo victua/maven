@@ -161,8 +161,8 @@ export function Sidebar({ currentPage }: SidebarProps) {
         {/* Header */}
         <div className="p-3 sm:p-4 border-b-2 border-white/20">
           <div className="flex items-center space-x-2 sm:space-x-3">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-white border border-white flex items-center justify-center">
-              <span className="text-primary font-bold text-xs sm:text-sm">M</span>
+            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-white border border-white flex items-center justify-center overflow-hidden">
+              <img src="/images/logo.png" alt="Maven Logo" className="w-full h-full object-contain" />
             </div>
             {isExpanded && (
               <div className="flex-1 min-w-0">

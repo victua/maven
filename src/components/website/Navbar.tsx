@@ -26,7 +26,7 @@ export function Navbar({ currentPage }: NavbarProps) {
         <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo */}
           <div className="flex items-center space-x-2 cursor-pointer" onClick={() => handleNavigate('home')}>
-            <Users className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
+            <img src="/images/logo.png" alt="Maven Logo" className="h-6 w-6 sm:h-8 sm:w-8 object-contain" />
             <span className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">Maven</span>
           </div>
 
