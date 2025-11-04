@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { LogOut, Plus, FileText, Users, Clock, CheckCircle2 } from 'lucide-react';
+import { FileText, Users, Briefcase, TrendingUp, CheckCircle2, Clock } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import {
   db,
   collection,
   getDocs,
   query,
-  where,
   orderBy
 } from '../../lib/firebase';
 
@@ -22,72 +21,67 @@ interface HiringRequest {
   status: string;
   deadline: string;
   created_at: string;
+  agency_id: string;
 }
 
-interface Placement {
+interface Candidate {
   id: string;
-  status: string;
-  placement_fee: number | null;
-  hiring_requests: {
-    job_title: string;
-  };
+  full_name: string;
+  profession: string;
+  verified: boolean;
+  available: boolean;
+}
+
+interface Agency {
+  id: string;
+  name: string;
+  subscription_tier: string;
+  subscription_status: string;
 }
 
 export function DashboardPage({ onNavigate }: DashboardPageProps) {
-  const { user, agency, signOut } = useAuth();
+  const { user, userProfile } = useAuth();
   const [hiringRequests, setHiringRequests] = useState<HiringRequest[]>([]);
-  const [placements, setPlacements] = useState<Placement[]>([]);
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [agencies, setAgencies] = useState<Agency[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (agency) {
+    if (user) {
       fetchData();
     }
-  }, [agency]);
+  }, [user]);
 
   const fetchData = async () => {
-    if (!agency) return;
-
     try {
-      // Fetch hiring requests
+      // Fetch all hiring requests
       const requestsRef = collection(db, 'hiring_requests');
-      const requestsQuery = query(
-        requestsRef,
-        where('agency_id', '==', agency.id),
-        orderBy('created_at', 'desc')
-      );
+      const requestsQuery = query(requestsRef, orderBy('created_at', 'desc'));
       const requestsSnapshot = await getDocs(requestsQuery);
       const requestsData = requestsSnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       })) as HiringRequest[];
 
-      // Fetch placements with hiring request data
-      const placementsRef = collection(db, 'placements');
-      const placementsQuery = query(
-        placementsRef,
-        where('agency_id', '==', agency.id)
-      );
-      const placementsSnapshot = await getDocs(placementsQuery);
+      // Fetch all candidates
+      const candidatesRef = collection(db, 'candidates');
+      const candidatesSnapshot = await getDocs(candidatesRef);
+      const candidatesData = candidatesSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Candidate[];
 
-      const placementsPromises = placementsSnapshot.docs.map(async (docSnapshot) => {
-        const placementData = { id: docSnapshot.id, ...docSnapshot.data() } as any;
-
-        // Get the hiring request data for this placement
-        const hiringRequest = requestsData.find(r => r.id === placementData.hiring_request_id);
-        if (hiringRequest) {
-          placementData.hiring_requests = {
-            job_title: hiringRequest.job_title
-          };
-        }
-
-        return placementData;
-      });
-
-      const placementsData = await Promise.all(placementsPromises);
+      // Fetch all agencies
+      const agenciesRef = collection(db, 'agencies');
+      const agenciesSnapshot = await getDocs(agenciesRef);
+      const agenciesData = agenciesSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as Agency[];
 
       setHiringRequests(requestsData);
-      setPlacements(placementsData as Placement[]);
+      setCandidates(candidatesData);
+      setAgencies(agenciesData);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
@@ -95,17 +89,16 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
     }
   };
 
-  const handleSignOut = async () => {
-    await signOut();
-    onNavigate('home');
-  };
-
   const stats = {
     totalRequests: hiringRequests.length,
     pending: hiringRequests.filter(r => r.status === 'pending').length,
     inProgress: hiringRequests.filter(r => r.status === 'in_progress').length,
     fulfilled: hiringRequests.filter(r => r.status === 'fulfilled').length,
-    placements: placements.length
+    totalCandidates: candidates.length,
+    verifiedCandidates: candidates.filter(c => c.verified).length,
+    availableCandidates: candidates.filter(c => c.available).length,
+    totalAgencies: agencies.length,
+    activeAgencies: agencies.filter(a => a.subscription_status === 'active').length
   };
 
   const getStatusColor = (status: string) => {
@@ -123,130 +116,200 @@ export function DashboardPage({ onNavigate }: DashboardPageProps) {
     }
   };
 
-  if (!user || !agency) {
+  if (!user) {
     return null;
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          <p className="mt-4 text-gray-600">Loading dashboard...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="ml-12 sm:ml-14 w-[98%] px-2 sm:px-4 py-6 sm:py-8">
+        {/* Header */}
         <div className="mb-6 sm:mb-8">
           <div className="bg-primary border-2 border-primary p-4 sm:p-6 text-white">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h2 className="text-lg sm:text-xl font-bold mb-1">Welcome back, {agency.name}</h2>
+                <h2 className="text-lg sm:text-xl font-bold mb-1">
+                  Welcome back, {userProfile?.displayName || 'Admin'}
+                </h2>
                 <p className="text-sm sm:text-base text-white/90">
-                  Subscription: <span className="font-bold capitalize">{agency.subscription_tier}</span>
-                  {' '} • Status: <span className="font-bold capitalize">{agency.subscription_status}</span>
+                  Admin Dashboard - System Overview
                 </p>
               </div>
-              <button
-                onClick={() => onNavigate('agency/new-request')}
-                className="w-full sm:w-auto bg-white text-primary px-4 sm:px-6 py-2 sm:py-3 border-2 border-white hover:bg-gray-50 transition-colors font-semibold flex items-center justify-center space-x-2"
-              >
-                <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
-                <span className="text-sm sm:text-base">New Request</span>
-              </button>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+          {/* Hiring Requests Stats */}
           <div className="bg-white border-2 border-gray-400 p-4 sm:p-6">
             <div className="flex items-center justify-between mb-2">
               <FileText className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
             </div>
             <p className="text-2xl sm:text-3xl font-bold text-primary">{stats.totalRequests}</p>
             <p className="text-gray-700 text-xs sm:text-sm font-medium">Total Requests</p>
+            <div className="mt-3 pt-3 border-t border-gray-200 space-y-1">
+              <div className="flex justify-between text-xs">
+                <span className="text-gray-600">Pending:</span>
+                <span className="font-semibold text-yellow-700">{stats.pending}</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-gray-600">In Progress:</span>
+                <span className="font-semibold text-blue-700">{stats.inProgress}</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-gray-600">Fulfilled:</span>
+                <span className="font-semibold text-green-700">{stats.fulfilled}</span>
+              </div>
+            </div>
           </div>
 
-          <div className="bg-white shadow-sm p-6">
+          {/* Candidates Stats */}
+          <div className="bg-white border-2 border-gray-400 p-4 sm:p-6">
             <div className="flex items-center justify-between mb-2">
-              <Clock className="h-8 w-8 text-yellow-600" />
+              <Users className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
             </div>
-            <p className="text-3xl font-bold text-gray-900">{stats.pending}</p>
-            <p className="text-gray-600 text-sm">Pending</p>
+            <p className="text-2xl sm:text-3xl font-bold text-primary">{stats.totalCandidates}</p>
+            <p className="text-gray-700 text-xs sm:text-sm font-medium">Total Candidates</p>
+            <div className="mt-3 pt-3 border-t border-gray-200 space-y-1">
+              <div className="flex justify-between text-xs">
+                <span className="text-gray-600">Verified:</span>
+                <span className="font-semibold text-green-700">{stats.verifiedCandidates}</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-gray-600">Available:</span>
+                <span className="font-semibold text-blue-700">{stats.availableCandidates}</span>
+              </div>
+            </div>
           </div>
 
-          <div className="bg-white shadow-sm p-6">
+          {/* Agencies Stats */}
+          <div className="bg-white border-2 border-gray-400 p-4 sm:p-6">
             <div className="flex items-center justify-between mb-2">
-              <FileText className="h-8 w-8 text-primary" />
+              <Briefcase className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
             </div>
-            <p className="text-3xl font-bold text-gray-900">{stats.inProgress}</p>
-            <p className="text-gray-600 text-sm">In Progress</p>
+            <p className="text-2xl sm:text-3xl font-bold text-primary">{stats.totalAgencies}</p>
+            <p className="text-gray-700 text-xs sm:text-sm font-medium">Partner Agencies</p>
+            <div className="mt-3 pt-3 border-t border-gray-200 space-y-1">
+              <div className="flex justify-between text-xs">
+                <span className="text-gray-600">Active:</span>
+                <span className="font-semibold text-green-700">{stats.activeAgencies}</span>
+              </div>
+            </div>
           </div>
 
-          <div className="bg-white shadow-sm p-6">
-            <div className="flex items-center justify-between mb-2">
-              <CheckCircle2 className="h-8 w-8 text-green-600" />
+          {/* Quick Actions */}
+          <div className="bg-white border-2 border-gray-400 p-4 sm:p-6">
+            <h3 className="text-sm font-bold text-gray-900 mb-3">Quick Actions</h3>
+            <div className="space-y-2">
+              <button
+                onClick={() => onNavigate('admin')}
+                className="w-full bg-primary text-white px-3 py-2 hover:bg-primary/90 transition-colors text-xs font-semibold"
+              >
+                Manage Requests
+              </button>
+              <button
+                onClick={() => onNavigate('talent')}
+                className="w-full bg-white border-2 border-primary text-primary px-3 py-2 hover:bg-primary/10 transition-colors text-xs font-semibold"
+              >
+                View Candidates
+              </button>
+              <button
+                onClick={() => onNavigate('agencies')}
+                className="w-full bg-white border-2 border-primary text-primary px-3 py-2 hover:bg-primary/10 transition-colors text-xs font-semibold"
+              >
+                Manage Agencies
+              </button>
             </div>
-            <p className="text-3xl font-bold text-gray-900">{stats.fulfilled}</p>
-            <p className="text-gray-600 text-sm">Fulfilled</p>
-          </div>
-
-          <div className="bg-white shadow-sm p-6">
-            <div className="flex items-center justify-between mb-2">
-              <Users className="h-8 w-8 text-purple-600" />
-            </div>
-            <p className="text-3xl font-bold text-gray-900">{stats.placements}</p>
-            <p className="text-gray-600 text-sm">Placements</p>
           </div>
         </div>
 
-        <div className="bg-white shadow-sm">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-bold text-gray-900">Recent Hiring Requests</h3>
+        {/* Recent Activity */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Recent Hiring Requests */}
+          <div className="bg-white border border-gray-300 shadow-sm">
+            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+              <h3 className="text-lg font-bold text-gray-900">Recent Hiring Requests</h3>
+              <button
+                onClick={() => onNavigate('admin')}
+                className="text-primary hover:text-primary/80 font-medium text-sm"
+              >
+                View All
+              </button>
+            </div>
+            <div className="p-6">
+              {hiringRequests.length === 0 ? (
+                <p className="text-gray-600 text-center py-8">No hiring requests yet</p>
+              ) : (
+                <div className="space-y-3">
+                  {hiringRequests.slice(0, 5).map((request) => (
+                    <div key={request.id} className="border-l-4 border-primary pl-3 py-2">
+                      <div className="flex justify-between items-start mb-1">
+                        <p className="font-semibold text-gray-900 text-sm">
+                          {request.quantity}x {request.job_title}
+                        </p>
+                        <span className={`px-2 py-0.5 text-xs font-semibold ${getStatusColor(request.status)}`}>
+                          {request.status.replace('_', ' ')}
+                        </span>
+                      </div>
+                      <p className="text-xs text-gray-600">
+                        {request.destination_country} • {new Date(request.deadline).toLocaleDateString()}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-          <div className="p-6">
-            {loading ? (
-              <p className="text-gray-600 text-center py-8">Loading...</p>
-            ) : hiringRequests.length === 0 ? (
-              <div className="text-center py-12">
-                <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600 mb-4">No hiring requests yet</p>
-                <button
-                  onClick={() => onNavigate('agency/new-request')}
-                  className="bg-primary text-white px-6 py-2 hover:bg-primary/90 transition-colors"
-                >
-                  Create Your First Request
-                </button>
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="text-left py-3 px-4 text-sm font-semibold text-gray-900">Position</th>
-                      <th className="text-left py-3 px-4 text-sm font-semibold text-gray-900">Quantity</th>
-                      <th className="text-left py-3 px-4 text-sm font-semibold text-gray-900">Destination</th>
-                      <th className="text-left py-3 px-4 text-sm font-semibold text-gray-900">Status</th>
-                      <th className="text-left py-3 px-4 text-sm font-semibold text-gray-900">Deadline</th>
-                      <th className="text-left py-3 px-4 text-sm font-semibold text-gray-900">Created</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {hiringRequests.map((request) => (
-                      <tr key={request.id} className="border-b border-gray-100 hover:bg-gray-50">
-                        <td className="py-4 px-4 text-gray-900 font-medium">{request.job_title}</td>
-                        <td className="py-4 px-4 text-gray-700">{request.quantity}</td>
-                        <td className="py-4 px-4 text-gray-700">{request.destination_country}</td>
-                        <td className="py-4 px-4">
-                          <span className={`px-3 py-1 text-xs font-semibold ${getStatusColor(request.status)}`}>
-                            {request.status.replace('_', ' ')}
-                          </span>
-                        </td>
-                        <td className="py-4 px-4 text-gray-700">
-                          {new Date(request.deadline).toLocaleDateString()}
-                        </td>
-                        <td className="py-4 px-4 text-gray-700">
-                          {new Date(request.created_at).toLocaleDateString()}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+
+          {/* Recent Candidates */}
+          <div className="bg-white border border-gray-300 shadow-sm">
+            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+              <h3 className="text-lg font-bold text-gray-900">Recent Candidates</h3>
+              <button
+                onClick={() => onNavigate('talent')}
+                className="text-primary hover:text-primary/80 font-medium text-sm"
+              >
+                View All
+              </button>
+            </div>
+            <div className="p-6">
+              {candidates.length === 0 ? (
+                <p className="text-gray-600 text-center py-8">No candidates yet</p>
+              ) : (
+                <div className="space-y-3">
+                  {candidates.slice(0, 5).map((candidate) => (
+                    <div key={candidate.id} className="flex justify-between items-center border-b border-gray-100 pb-2">
+                      <div>
+                        <div className="flex items-center space-x-2">
+                          <p className="font-semibold text-gray-900 text-sm">{candidate.full_name}</p>
+                          {candidate.verified && (
+                            <CheckCircle2 className="h-4 w-4 text-green-600" />
+                          )}
+                        </div>
+                        <p className="text-xs text-gray-600">{candidate.profession}</p>
+                      </div>
+                      <span className={`px-2 py-0.5 text-xs font-semibold ${
+                        candidate.available ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                      }`}>
+                        {candidate.available ? 'Available' : 'Unavailable'}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
