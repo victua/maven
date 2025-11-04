@@ -41,7 +41,7 @@ const menuItems: MenuItem[] = [
     roles: ['admin']
   },
   {
-    id: 'roles',
+    id: 'admin/roles',
     label: 'Roles',
     icon: Briefcase,
     roles: ['admin']
