@@ -9,6 +9,7 @@ import { PricingPage } from './pages/website/PricingPage';
 import { ContactPage } from './pages/website/ContactPage';
 import { LoginPage } from './pages/website/LoginPage';
 import { SignupPage } from './pages/website/SignupPage';
+import { RolesPage } from './pages/website/RolesPage';
 
 // Admin portal imports
 import { AdminPage } from './pages/admin/AdminPage';
@@ -67,7 +68,7 @@ function AppContent() {
     );
   }
 
-  const publicPaths = ['/home', '/about', '/pricing', '/contact', '/login', '/signup', '/setup', '/'];
+  const publicPaths = ['/home', '/about', '/pricing', '/contact', '/login', '/signup', '/setup', '/roles', '/'];
   const showNavbar = publicPaths.includes(location.pathname);
   const showSidebar = user && userProfile && !publicPaths.includes(location.pathname);
 
@@ -96,6 +97,7 @@ function AppContent() {
           <Route path="/login" element={<LoginPage onNavigate={handleNavigate} />} />
           <Route path="/signup" element={<SignupPage onNavigate={handleNavigate} />} />
           <Route path="/setup" element={<SetupPage onNavigate={handleNavigate} />} />
+          <Route path="/roles" element={<RolesPage />} />
 
           {/* Protected Pages */}
           <Route path="/admin" element={
@@ -147,7 +149,7 @@ function AppContent() {
             </RouteGuard>
           } />
 
-          <Route path="/roles" element={
+          <Route path="/admin/roles" element={
             <RouteGuard requiredRole={['admin']} onUnauthorized={handleUnauthorized}>
               <RoleManagementPage />
             </RouteGuard>
