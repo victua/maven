@@ -120,9 +120,9 @@ export function RolesPage() {
         showCta={false}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="w-[96%] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search and Filters */}
-        <div className="bg-white border border-gray-200 p-6 mb-8">
+        <div className="bg-white border border-gray-200 rounded-xl p-6 mb-8 shadow-lg animate-slideInDown">
           <div className="space-y-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -131,7 +131,7 @@ export function RolesPage() {
                 placeholder="Search by job title, company, or skills..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-base"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-base transition-all"
               />
             </div>
 
@@ -143,7 +143,7 @@ export function RolesPage() {
                   placeholder="Any location"
                   value={filterLocation}
                   onChange={(e) => setFilterLocation(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm transition-all"
                 />
               </div>
 
@@ -152,7 +152,7 @@ export function RolesPage() {
                 <select
                   value={filterEmploymentType}
                   onChange={(e) => setFilterEmploymentType(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm transition-all"
                 >
                   <option value="">All Types</option>
                   <option value="full-time">Full Time</option>
@@ -169,7 +169,7 @@ export function RolesPage() {
                   placeholder="e.g., 2-5 years"
                   value={filterExperience}
                   onChange={(e) => setFilterExperience(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm transition-all"
                 />
               </div>
 
@@ -181,7 +181,7 @@ export function RolesPage() {
                     setFilterEmploymentType('');
                     setFilterExperience('');
                   }}
-                  className="w-full px-4 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors font-medium border border-gray-300"
+                  className="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all font-medium border border-gray-300"
                 >
                   Clear Filters
                 </button>
@@ -213,12 +213,13 @@ export function RolesPage() {
                   </p>
                 </div>
 
-                {filteredRoles.map((role) => (
+                {filteredRoles.map((role, index) => (
                   <div
                     key={role.id}
-                    className={`bg-white border border-gray-200 p-6 hover:border-primary hover:shadow-md transition-all cursor-pointer ${
-                      selectedRole?.id === role.id ? 'border-primary shadow-md' : ''
+                    className={`bg-white border border-gray-200 rounded-xl p-6 hover:border-primary hover:shadow-xl transition-all cursor-pointer card-hover animate-slideInUp ${
+                      selectedRole?.id === role.id ? 'border-primary shadow-xl ring-2 ring-primary/20' : ''
                     }`}
+                    style={{ animationDelay: `${index * 0.05}s` }}
                     onClick={() => setSelectedRole(role)}
                   >
                     <div className="flex justify-between items-start mb-3">
@@ -292,7 +293,7 @@ export function RolesPage() {
           {/* Job Details Sidebar */}
           <div className="lg:col-span-1">
             {selectedRole ? (
-              <div className="bg-white border border-gray-200 p-6 sticky top-4">
+              <div className="bg-white border border-gray-200 rounded-xl p-6 sticky top-4 shadow-xl animate-scaleIn">
                 <div className="flex items-center gap-2 mb-3">
                   <h2 className="text-xl font-bold text-primary">{selectedRole.title}</h2>
                   {selectedRole.priority === 'urgent' && (
@@ -346,7 +347,7 @@ export function RolesPage() {
                 <div className="space-y-3">
                   <button
                     onClick={() => handleApply(selectedRole)}
-                    className="w-full bg-primary text-white py-3 px-4 hover:bg-primary/90 transition-colors font-semibold border border-primary"
+                    className="w-full bg-gradient-to-r from-primary to-blue-600 text-white py-3 px-4 rounded-lg hover:shadow-xl transition-all duration-300 font-semibold transform hover:scale-105"
                   >
                     Apply Now
                   </button>
@@ -363,7 +364,7 @@ export function RolesPage() {
                         alert('Job link copied to clipboard!');
                       }
                     }}
-                    className="w-full border border-gray-300 text-gray-700 py-3 px-4 hover:bg-gray-50 transition-colors font-semibold"
+                    className="w-full border-2 border-gray-300 text-gray-700 py-3 px-4 rounded-lg hover:bg-gray-50 hover:border-primary transition-all duration-300 font-semibold"
                   >
                     Share Job
                   </button>

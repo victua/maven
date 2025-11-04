@@ -13,11 +13,11 @@ export function AboutPage() {
       <section className="w-[96%] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 
         <div className="space-y-12 mb-20">
-          <div className="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-8">
-            <div className="bg-secondary text-white w-12 h-12 flex items-center justify-center font-bold text-xl flex-shrink-0">
+          <div className="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-8 animate-slideInLeft">
+            <div className="bg-gradient-to-br from-secondary to-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center font-bold text-2xl flex-shrink-0 shadow-lg">
               1
             </div>
-            <div className="flex-1">
+            <div className="flex-1 bg-white p-6 rounded-xl shadow-lg border border-gray-100 card-hover">
               <h3 className="text-2xl font-bold text-gray-900 mb-3">Subscribe to Maven</h3>
               <p className="text-gray-600 leading-relaxed">
                 Agencies choose a subscription tier that fits their hiring needs. Our flexible plans include
@@ -26,11 +26,11 @@ export function AboutPage() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-8">
-            <div className="bg-primary text-white w-12 h-12 flex items-center justify-center font-bold text-xl flex-shrink-0">
+          <div className="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-8 animate-slideInRight delay-100">
+            <div className="bg-gradient-to-br from-primary to-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center font-bold text-2xl flex-shrink-0 shadow-lg">
               2
             </div>
-            <div className="flex-1">
+            <div className="flex-1 bg-white p-6 rounded-xl shadow-lg border border-gray-100 card-hover">
               <h3 className="text-2xl font-bold text-gray-900 mb-3">Submit Hiring Requests</h3>
               <p className="text-gray-600 leading-relaxed">
                 Detail your specific needs - "50 drivers for Dubai" or "25 teachers for Qatar" - including
@@ -39,11 +39,11 @@ export function AboutPage() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-8">
-            <div className="bg-secondary text-white w-12 h-12 flex items-center justify-center font-bold text-xl flex-shrink-0">
+          <div className="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-8 animate-slideInLeft delay-200">
+            <div className="bg-gradient-to-br from-secondary to-green-600 text-white w-16 h-16 rounded-full flex items-center justify-center font-bold text-2xl flex-shrink-0 shadow-lg">
               3
             </div>
-            <div className="flex-1">
+            <div className="flex-1 bg-white p-6 rounded-xl shadow-lg border border-gray-100 card-hover">
               <h3 className="text-2xl font-bold text-gray-900 mb-3">Maven Team Matches Candidates</h3>
               <p className="text-gray-600 leading-relaxed">
                 Our expert team reviews your request and searches our verified database for the best matches.
@@ -52,11 +52,11 @@ export function AboutPage() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-8">
-            <div className="bg-primary text-white w-12 h-12 flex items-center justify-center font-bold text-xl flex-shrink-0">
+          <div className="flex flex-col md:flex-row items-start space-y-4 md:space-y-0 md:space-x-8 animate-slideInRight delay-300">
+            <div className="bg-gradient-to-br from-primary to-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center font-bold text-2xl flex-shrink-0 shadow-lg">
               4
             </div>
-            <div className="flex-1">
+            <div className="flex-1 bg-white p-6 rounded-xl shadow-lg border border-gray-100 card-hover">
               <h3 className="text-2xl font-bold text-gray-900 mb-3">Receive Qualified Candidates</h3>
               <p className="text-gray-600 leading-relaxed">
                 Once matched, you receive candidate profiles ready for final interviews and placement.
@@ -66,34 +66,42 @@ export function AboutPage() {
           </div>
         </div>
 
-        <div className="bg-gray-50 p-8 md:p-12">
+        <div className="bg-gradient-to-br from-gray-50 to-blue-50 p-8 md:p-12 rounded-2xl shadow-xl animate-scaleIn delay-400">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
             Why Agencies Choose Maven
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="flex items-start space-x-3">
-              <CheckCircle2 className="h-6 w-6 text-secondary flex-shrink-0 mt-1" />
+            <div className="flex items-start space-x-3 bg-white p-6 rounded-lg shadow-md card-hover">
+              <div className="bg-secondary/10 p-2 rounded-full">
+                <CheckCircle2 className="h-6 w-6 text-secondary flex-shrink-0" />
+              </div>
               <div>
                 <h4 className="font-semibold text-gray-900 mb-1">Pre-Vetted Talent Pool</h4>
                 <p className="text-gray-600">Access thousands of verified Kenyan professionals</p>
               </div>
             </div>
-            <div className="flex items-start space-x-3">
-              <CheckCircle2 className="h-6 w-6 text-secondary flex-shrink-0 mt-1" />
+            <div className="flex items-start space-x-3 bg-white p-6 rounded-lg shadow-md card-hover">
+              <div className="bg-secondary/10 p-2 rounded-full">
+                <CheckCircle2 className="h-6 w-6 text-secondary flex-shrink-0" />
+              </div>
               <div>
                 <h4 className="font-semibold text-gray-900 mb-1">Managed Matching Process</h4>
                 <p className="text-gray-600">Our team handles sourcing and initial screening</p>
               </div>
             </div>
-            <div className="flex items-start space-x-3">
-              <CheckCircle2 className="h-6 w-6 text-secondary flex-shrink-0 mt-1" />
+            <div className="flex items-start space-x-3 bg-white p-6 rounded-lg shadow-md card-hover">
+              <div className="bg-secondary/10 p-2 rounded-full">
+                <CheckCircle2 className="h-6 w-6 text-secondary flex-shrink-0" />
+              </div>
               <div>
                 <h4 className="font-semibold text-gray-900 mb-1">Quality Assurance</h4>
                 <p className="text-gray-600">Every candidate verified and ready for international placement</p>
               </div>
             </div>
-            <div className="flex items-start space-x-3">
-              <CheckCircle2 className="h-6 w-6 text-secondary flex-shrink-0 mt-1" />
+            <div className="flex items-start space-x-3 bg-white p-6 rounded-lg shadow-md card-hover">
+              <div className="bg-secondary/10 p-2 rounded-full">
+                <CheckCircle2 className="h-6 w-6 text-secondary flex-shrink-0" />
+              </div>
               <div>
                 <h4 className="font-semibold text-gray-900 mb-1">Success-Based Pricing</h4>
                 <p className="text-gray-600">Pay placement fees only for successful hires</p>

@@ -61,12 +61,13 @@ export function PricingPage({ onNavigate }: PricingPageProps) {
       <section className="w-[96%] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {tiers.map((tier) => (
+          {tiers.map((tier, index) => (
             <div
               key={tier.name}
-              className={`bg-white shadow-lg hover:shadow-xl transition-shadow ${
-                tier.popular ? 'ring-2 ring-primary relative' : ''
+              className={`bg-white rounded-xl shadow-lg card-hover animate-slideInUp overflow-hidden ${
+                tier.popular ? 'ring-2 ring-primary relative transform scale-105' : ''
               }`}
+              style={{ animationDelay: `${index * 0.15}s` }}
             >
               {tier.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -84,10 +85,10 @@ export function PricingPage({ onNavigate }: PricingPageProps) {
                 <p className="text-gray-600 mb-6">{tier.description}</p>
                 <button
                   onClick={() => onNavigate('signup')}
-                  className={`w-full py-3 font-semibold transition-colors ${
+                  className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${
                     tier.popular
-                      ? 'bg-secondary text-white hover:bg-secondary/90'
-                      : 'bg-primary/10 text-primary hover:bg-primary/20'
+                      ? 'bg-gradient-to-r from-secondary to-green-600 text-white hover:shadow-xl'
+                      : 'bg-primary/10 text-primary hover:bg-primary/20 hover:shadow-md'
                   }`}
                 >
                   Get Started
@@ -105,7 +106,7 @@ export function PricingPage({ onNavigate }: PricingPageProps) {
           ))}
         </div>
 
-        <div className="bg-secondary/10 p-8 md:p-12">
+        <div className="bg-gradient-to-br from-secondary/10 via-green-50 to-secondary/10 p-8 md:p-12 rounded-2xl shadow-xl animate-scaleIn delay-400">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 text-center">
             Success-Based Placement Fees
           </h2>
