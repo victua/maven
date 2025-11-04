@@ -58,7 +58,7 @@ export function PricingPage({ onNavigate }: PricingPageProps) {
         onCtaClick={() => onNavigate('signup')}
       />
 
-      <section className="w-[96%] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="w-full px-6 sm:px-8 lg:px-12 py-20">
 
         <div className="grid md:grid-cols-3 gap-8 mb-16">
           {tiers.map((tier, index) => (

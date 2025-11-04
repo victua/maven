@@ -10,7 +10,7 @@ export function ContactPage() {
         showCta={false}
       />
 
-      <section className="w-[96%] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="w-full px-6 sm:px-8 lg:px-12 py-20">
 
         <div className="grid md:grid-cols-2 gap-12">
           <div className="animate-slideInLeft">

@@ -28,7 +28,7 @@ export function HomePage({ onNavigate }: HomePageProps = {}) {
 
       {/* Trust Indicators */}
       <section className="bg-gradient-to-r from-gray-50 to-gray-100 py-12 border-y border-gray-200">
-        <div className="w-[96%] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-6 sm:px-8 lg:px-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div className="animate-slideInUp delay-100">
               <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">1000+</div>
@@ -52,7 +52,7 @@ export function HomePage({ onNavigate }: HomePageProps = {}) {
 
       {/* How It Works Section */}
       <section className="py-16 sm:py-20 bg-white">
-        <div className="w-[96%] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-12 sm:mb-16 animate-fadeIn">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
               How Maven Works
@@ -133,7 +133,7 @@ export function HomePage({ onNavigate }: HomePageProps = {}) {
 
       {/* For Job Seekers Section */}
       <section className="bg-gradient-to-br from-primary/5 via-blue-50 to-primary/10 py-16 sm:py-20 overflow-hidden">
-        <div className="w-[96%] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-6 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="animate-slideInLeft">
               <div className="inline-block bg-gradient-to-r from-primary to-blue-600 text-white px-6 py-2 rounded-full text-sm font-semibold mb-4 shadow-md">
@@ -227,7 +227,7 @@ export function HomePage({ onNavigate }: HomePageProps = {}) {
 
       {/* For Agencies Section */}
       <section className="py-16 sm:py-20 bg-white overflow-hidden">
-        <div className="w-[96%] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-6 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1 animate-slideInLeft">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -341,7 +341,7 @@ export function HomePage({ onNavigate }: HomePageProps = {}) {
           <div className="absolute top-10 left-10 w-72 h-72 bg-white rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-300 rounded-full blur-3xl"></div>
         </div>
-        <div className="w-[96%] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div className="w-full px-6 sm:px-8 lg:px-12 text-center relative z-10">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 animate-fadeIn">
             Ready to Take the Next Step?
           </h2>

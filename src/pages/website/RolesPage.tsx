@@ -120,7 +120,7 @@ export function RolesPage() {
         showCta={false}
       />
 
-      <div className="w-[96%] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="w-full px-6 sm:px-8 lg:px-12 py-8">
         {/* Search and Filters */}
         <div className="bg-white border border-gray-200 rounded-xl p-6 mb-8 shadow-lg animate-slideInDown">
           <div className="space-y-4">
