@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Search, Building, Edit2, Trash2, Plus, Mail, Phone, MapPin, Calendar, DollarSign, CheckCircle2, XCircle, Clock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Search, Building, Edit2, Trash2, Plus, Mail, Phone, MapPin, Calendar, DollarSign, CheckCircle2, XCircle, Clock, ChevronLeft, ChevronRight, Eye } from 'lucide-react';
 import {
   db,
   collection,
@@ -38,41 +39,16 @@ interface Agency {
 }
 
 export function AgenciesManagementPage() {
+  const navigate = useNavigate();
   const [agencies, setAgencies] = useState<Agency[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
-  const [showAgencyModal, setShowAgencyModal] = useState(false);
-  const [editingAgency, setEditingAgency] = useState<Agency | null>(null);
   const [filterTier, setFilterTier] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterCountry, setFilterCountry] = useState<string>('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
-  const [agencyForm, setAgencyForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    country: '',
-    city: '',
-    address: '',
-    website: '',
-    license_number: '',
-    contact_person: '',
-    contact_title: '',
-    subscription_tier: 'basic' as 'basic' | 'premium' | 'enterprise',
-    subscription_status: 'pending' as 'active' | 'inactive' | 'pending' | 'suspended',
-    billing_email: '',
-    payment_method: '',
-    contract_start: '',
-    contract_end: '',
-    notes: ''
-  });
-
-  const countries = [
-    'United States', 'United Kingdom', 'Canada', 'Australia', 'Germany', 'France', 'Netherlands',
-    'Singapore', 'UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman', 'Jordan',
-    'Egypt', 'Morocco', 'South Africa', 'Nigeria', 'Kenya', 'Ghana', 'India', 'Philippines',
-    'Malaysia', 'Thailand', 'Indonesia', 'Vietnam', 'Japan', 'South Korea', 'China'
-  ];
 
   useEffect(() => {
     fetchAgencies();
@@ -116,84 +92,20 @@ export function AgenciesManagementPage() {
     return matchesSearch && matchesTier && matchesStatus && matchesCountry;
   });
 
-  const openAgencyModal = (agency?: Agency) => {
-    if (agency) {
-      setEditingAgency(agency);
-      setAgencyForm({
-        name: agency.name || '',
-        email: agency.email || '',
-        phone: agency.phone || '',
-        country: agency.country || '',
-        city: agency.city || '',
-        address: agency.address || '',
-        website: agency.website || '',
-        license_number: agency.license_number || '',
-        contact_person: agency.contact_person || '',
-        contact_title: agency.contact_title || '',
-        subscription_tier: agency.subscription_tier || 'basic',
-        subscription_status: agency.subscription_status || 'pending',
-        billing_email: agency.billing_email || '',
-        payment_method: agency.payment_method || '',
-        contract_start: agency.contract_start?.toISOString().split('T')[0] || '',
-        contract_end: agency.contract_end?.toISOString().split('T')[0] || '',
-        notes: agency.notes || ''
-      });
-    } else {
-      setEditingAgency(null);
-      setAgencyForm({
-        name: '', email: '', phone: '', country: '', city: '', address: '', website: '',
-        license_number: '', contact_person: '', contact_title: '', subscription_tier: 'basic',
-        subscription_status: 'pending', billing_email: '', payment_method: '',
-        contract_start: '', contract_end: '', notes: ''
-      });
-    }
-    setShowAgencyModal(true);
+  // Pagination logic
+  const totalPages = Math.ceil(filteredAgencies.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedAgencies = filteredAgencies.slice(startIndex, endIndex);
+
+  const goToPage = (page: number) => {
+    setCurrentPage(Math.max(1, Math.min(page, totalPages)));
   };
 
-  const closeAgencyModal = () => {
-    setShowAgencyModal(false);
-    setEditingAgency(null);
-  };
-
-  const saveAgency = async () => {
-    try {
-      const agencyData = {
-        name: agencyForm.name,
-        email: agencyForm.email,
-        phone: agencyForm.phone,
-        country: agencyForm.country,
-        city: agencyForm.city,
-        address: agencyForm.address,
-        website: agencyForm.website,
-        license_number: agencyForm.license_number,
-        contact_person: agencyForm.contact_person,
-        contact_title: agencyForm.contact_title,
-        subscription_tier: agencyForm.subscription_tier,
-        subscription_status: agencyForm.subscription_status,
-        billing_email: agencyForm.billing_email,
-        payment_method: agencyForm.payment_method,
-        contract_start: agencyForm.contract_start ? new Date(agencyForm.contract_start) : null,
-        contract_end: agencyForm.contract_end ? new Date(agencyForm.contract_end) : null,
-        notes: agencyForm.notes,
-        updated_at: serverTimestamp()
-      };
-
-      if (editingAgency) {
-        const agencyRef = doc(db, 'agencies', editingAgency.id);
-        await updateDoc(agencyRef, agencyData);
-      } else {
-        await addDoc(collection(db, 'agencies'), {
-          ...agencyData,
-          created_at: serverTimestamp()
-        });
-      }
-
-      fetchAgencies();
-      closeAgencyModal();
-    } catch (error) {
-      console.error('Error saving agency:', error);
-    }
-  };
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, filterTier, filterStatus, filterCountry]);
 
   const updateAgencyStatus = async (agencyId: string, newStatus: 'active' | 'inactive' | 'pending' | 'suspended') => {
     try {
@@ -262,6 +174,7 @@ export function AgenciesManagementPage() {
     }
   };
 
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="ml-12 sm:ml-14 w-[98%] px-2 sm:px-4 py-6 sm:py-8">
@@ -317,7 +230,7 @@ export function AgenciesManagementPage() {
                 </select>
               </div>
               <button
-                onClick={() => openAgencyModal()}
+                onClick={() => navigate('/agencies/new')}
                 className="flex items-center justify-center space-x-2 px-4 py-2 sm:py-3 bg-primary text-white hover:bg-primary/90 transition-colors font-semibold border border-primary text-sm sm:text-base whitespace-nowrap"
               >
                 <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -354,7 +267,7 @@ export function AgenciesManagementPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredAgencies.map((agency) => (
+                      {paginatedAgencies.map((agency) => (
                         <tr key={agency.id} className="border-b border-gray-100 hover:bg-gray-50">
                           <td className="py-4 px-4">
                             <div className="flex items-center space-x-3">
@@ -408,10 +321,11 @@ export function AgenciesManagementPage() {
                           <td className="py-4 px-4">
                             <div className="flex items-center space-x-2">
                               <button
-                                onClick={() => openAgencyModal(agency)}
+                                onClick={() => navigate(`/agencies/${agency.id}`)}
                                 className="p-2 text-gray-600 hover:text-primary transition-colors border border-gray-300 hover:bg-gray-100"
+                                title="View Details"
                               >
-                                <Edit2 className="h-4 w-4" />
+                                <Eye className="h-4 w-4" />
                               </button>
                               <select
                                 value={agency.subscription_status}
@@ -439,7 +353,7 @@ export function AgenciesManagementPage() {
 
                 {/* Mobile/Tablet Card View */}
                 <div className="xl:hidden space-y-4">
-                  {filteredAgencies.map((agency) => (
+                  {paginatedAgencies.map((agency) => (
                     <div key={agency.id} className="bg-gray-50 border border-gray-300 p-4">
                       <div className="flex items-center space-x-3 mb-3">
                         <div className="w-10 h-10 bg-green-100 border border-gray-300 flex items-center justify-center">
@@ -487,11 +401,11 @@ export function AgenciesManagementPage() {
 
                       <div className="flex flex-wrap gap-2">
                         <button
-                          onClick={() => openAgencyModal(agency)}
-                          className="flex items-center space-x-1 px-3 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors text-sm border border-gray-300"
+                          onClick={() => navigate(`/agencies/${agency.id}`)}
+                          className="flex items-center space-x-1 px-3 py-2 bg-primary text-white hover:bg-primary/90 transition-colors text-sm border border-primary"
                         >
-                          <Edit2 className="h-4 w-4" />
-                          <span>Edit</span>
+                          <Eye className="h-4 w-4" />
+                          <span>View</span>
                         </button>
                         <select
                           value={agency.subscription_status}
@@ -516,230 +430,72 @@ export function AgenciesManagementPage() {
                 </div>
               </div>
             )}
+
+            {/* Pagination */}
+            {filteredAgencies.length > 0 && (
+              <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-gray-200">
+                <div className="text-sm text-gray-600">
+                  Showing {startIndex + 1} to {Math.min(endIndex, filteredAgencies.length)} of {filteredAgencies.length} agencies
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => goToPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="flex items-center px-3 py-2 text-sm border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <ChevronLeft className="h-4 w-4 mr-1" />
+                    Previous
+                  </button>
+
+                  <div className="flex space-x-1">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => {
+                      // Show first page, current page and its neighbors, and last page
+                      const showPage = page === 1 || page === totalPages ||
+                        (page >= currentPage - 1 && page <= currentPage + 1);
+
+                      if (!showPage && page === 2 && currentPage > 4) {
+                        return <span key={page} className="px-2 py-1 text-gray-500">...</span>;
+                      }
+
+                      if (!showPage && page === totalPages - 1 && currentPage < totalPages - 3) {
+                        return <span key={page} className="px-2 py-1 text-gray-500">...</span>;
+                      }
+
+                      if (!showPage) return null;
+
+                      return (
+                        <button
+                          key={page}
+                          onClick={() => goToPage(page)}
+                          className={`px-3 py-2 text-sm border transition-colors ${
+                            currentPage === page
+                              ? 'bg-primary text-white border-primary'
+                              : 'border-gray-300 hover:bg-gray-100 text-gray-700'
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <button
+                    onClick={() => goToPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="flex items-center px-3 py-2 text-sm border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    Next
+                    <ChevronRight className="h-4 w-4 ml-1" />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Agency Modal */}
-      {showAgencyModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white border-2 border-gray-400 p-6 w-full max-w-4xl max-h-screen overflow-y-auto">
-            <h2 className="text-xl sm:text-2xl font-bold text-primary mb-6">
-              {editingAgency ? 'Edit Agency' : 'Add New Agency'}
-            </h2>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-primary mb-1">Agency Name *</label>
-                  <input
-                    type="text"
-                    value={agencyForm.name}
-                    onChange={(e) => setAgencyForm({ ...agencyForm, name: e.target.value })}
-                    className="w-full px-3 py-2 border-2 border-gray-400 focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
-                  <input
-                    type="email"
-                    value={agencyForm.email}
-                    onChange={(e) => setAgencyForm({ ...agencyForm, email: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                  <input
-                    type="tel"
-                    value={agencyForm.phone}
-                    onChange={(e) => setAgencyForm({ ...agencyForm, phone: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Country *</label>
-                    <select
-                      value={agencyForm.country}
-                      onChange={(e) => setAgencyForm({ ...agencyForm, country: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                    >
-                      <option value="">Select Country</option>
-                      {countries.map(country => (
-                        <option key={country} value={country}>{country}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-                    <input
-                      type="text"
-                      value={agencyForm.city}
-                      onChange={(e) => setAgencyForm({ ...agencyForm, city: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                  <textarea
-                    value={agencyForm.address}
-                    onChange={(e) => setAgencyForm({ ...agencyForm, address: e.target.value })}
-                    rows={2}
-                    className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none resize-none text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Website</label>
-                  <input
-                    type="url"
-                    value={agencyForm.website}
-                    onChange={(e) => setAgencyForm({ ...agencyForm, website: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                    placeholder="https://"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">License Number</label>
-                  <input
-                    type="text"
-                    value={agencyForm.license_number}
-                    onChange={(e) => setAgencyForm({ ...agencyForm, license_number: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Contact Person</label>
-                    <input
-                      type="text"
-                      value={agencyForm.contact_person}
-                      onChange={(e) => setAgencyForm({ ...agencyForm, contact_person: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Contact Title</label>
-                    <input
-                      type="text"
-                      value={agencyForm.contact_title}
-                      onChange={(e) => setAgencyForm({ ...agencyForm, contact_title: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                      placeholder="e.g., CEO, Manager"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Subscription Tier</label>
-                    <select
-                      value={agencyForm.subscription_tier}
-                      onChange={(e) => setAgencyForm({ ...agencyForm, subscription_tier: e.target.value as any })}
-                      className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                    >
-                      <option value="basic">Basic</option>
-                      <option value="premium">Premium</option>
-                      <option value="enterprise">Enterprise</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                    <select
-                      value={agencyForm.subscription_status}
-                      onChange={(e) => setAgencyForm({ ...agencyForm, subscription_status: e.target.value as any })}
-                      className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                    >
-                      <option value="pending">Pending</option>
-                      <option value="active">Active</option>
-                      <option value="inactive">Inactive</option>
-                      <option value="suspended">Suspended</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Billing Email</label>
-                  <input
-                    type="email"
-                    value={agencyForm.billing_email}
-                    onChange={(e) => setAgencyForm({ ...agencyForm, billing_email: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
-                  <input
-                    type="text"
-                    value={agencyForm.payment_method}
-                    onChange={(e) => setAgencyForm({ ...agencyForm, payment_method: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                    placeholder="e.g., Credit Card, Bank Transfer"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Contract Start</label>
-                    <input
-                      type="date"
-                      value={agencyForm.contract_start}
-                      onChange={(e) => setAgencyForm({ ...agencyForm, contract_start: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Contract End</label>
-                    <input
-                      type="date"
-                      value={agencyForm.contract_end}
-                      onChange={(e) => setAgencyForm({ ...agencyForm, contract_end: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-                  <textarea
-                    value={agencyForm.notes}
-                    onChange={(e) => setAgencyForm({ ...agencyForm, notes: e.target.value })}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none resize-none text-sm"
-                    placeholder="Internal notes about this agency"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 mt-6">
-              <button
-                onClick={saveAgency}
-                className="flex-1 bg-primary text-white py-3 px-6 hover:bg-primary/90 transition-colors font-semibold border border-primary text-sm sm:text-base"
-              >
-                {editingAgency ? 'Update Agency' : 'Add Agency'}
-              </button>
-              <button
-                onClick={closeAgencyModal}
-                className="flex-1 border-2 border-gray-400 text-gray-700 py-3 px-6 hover:bg-gray-50 transition-colors font-semibold text-sm sm:text-base"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -1,0 +1,91 @@
+Employer Name,Phone,Email,Website,Location
+NAIM Investments Ltd.,"+254 720 931 164, +254 799 659 792, +254 718 199 314","abadalladash@yahoo.co.nz, admin@naiminvestments.com, naimagency@gmail.com",https://naiminvestments.com/,Office 11, Second Floor, Bamatan House, Pramukh Road, Mombasa, Kenya.
+ADBAS Agency Ltd,+254 746 690 671,admin@fidelityltd.co.ke,https://fidelityltd.co.ke/,Kingdom Gardens, Muthiaga
+GMTDM International,"+254 723 800 656, +254 708 398 343","admin@tdminternational.co.ke, info@tdminternational.co.ke, tdminternational77@gmail.com",,
+AIRWAYS TRAVEL & TOURS LIMITED,+254 713 555 777,airways_travelandtours@yahoo.com,,
+ALAMAL Human Resource Limited,+254 700 839 095,alalamalhumanresourcesltd@gmail.com,,
+ALEXANDRIA Human Resources Limited,+254 711 700 120,alexandriahumanresources@gmail.com,,
+ALFARIS Management Services Ltd,+254 722 284 390,alfarismanagemt@gmail.com,,
+ALFURQAN Management Services Ltd,+254 722 830 000,alfurqanmsltd@gmail.com,,
+AL-HILAAL Agencies Limited,+254 722 830 000,alhilaalagenciesltd@gmail.com,,
+ALIBAHIR Agency Limited,+254 720 985 683,alibahiragencyltd@gmail.com,,
+ALIKAMA Employment Agency Ltd,"+254 714 360 360, +254 722 595 466",alikamaemploymentagencyltd@gmail.com,,
+AL-JACKLAH,,aljacklah21@gmail.com,WWW.JACKLAH.COM,
+ALJAWHARA Recruitment Agency Limited,+254 797 800 000,aljawhararecruitment@gmail.com,,
+AL-MIDAD RECRUITMENT AGENCY LIMITED,+254 721 861 395,almidadagencyltd@gmail.com,,
+Altowfiq Recruitment and Consulting Agency,+254 720 729 954,alrecolt@gmail.com,,
+ALRUWWAD International Limited,+254 707 278 787,alruwwadinternational@gmail.com,,
+Alsaraf Consultancies Limited,+254 727 870 279,alsarafconsultancy@gmail.com,,
+ALWADI Travel Agency Limited,,alwadiagenc19@gmail.com,,
+ALWAHDA Agencies Limited,+254 797 800 000,alwahdaagenciesltd@gmail.com,,
+ASIA Connection Recruitment Agency Limited,+254 722 710 882,asiaconnection@gmail.com,,
+AZYAN Agencies Limited,+254 705 281 148,azyanagenciesltd@gmail.com,,
+BEYOND Recruiters Kenya Limited,+254 743 459 288,beyondrecruiterskenyaltd@gmail.com,,
+BLUE MOUNTAIN Recruiters Limited,+254 722 830 000,bluemountainrecruiters@gmail.com,,
+BrighterMonday Kenya,"+254 703 026 000, +254 780 029 000",,brightermonday.co.ke,
+BRILLIANTS LINK Agency Limited,+254 723 648 488,brilliantslinkagencyltd@gmail.com,,
+B-Trench Africa Limited,+254 706 664 805,btrenchltd@gmail.com,,
+CENTURY Recruiters Limited,+254 700 839 095,centuryrecruitersltd@gmail.com,,
+CHANCE Link Recruitment Agency Limited,+254 722 830 000,chancelinkrecruiters@gmail.com,,
+DEE Nanny Placement Agency Limited,+254 711 433 690,deenannyagency@gmail.com,,
+DENHA Ventures Limited,+254 725 500 000,denhaventures@gmail.com,,
+DUETRA Ventures Limited,+254 716 606 158,duetraventures@gmail.com,,
+SUPAGE Safaris Limited,+254 718 202 717,eastsafaris20@gmail.com,,
+Eunysmart Recruitment Agencies Ltd,"+254 723 469 959, +254 702 358 338",eunysmartagencies@gmail.com,,Thika Town, Grace House.
+GLENN Heights Limited,+254 728 355 533,glennheightslimited@gmail.com,,
+ADEL ABDELRAHMAN Group Limited,+254 722 969 610,goldlineagenciesltd@gmail.com,,
+LIZDY Manpower Agency,+254 722 969 610,goldlineagenciesltd@gmail.com,,
+Heys Recruitment Experts Ltd,"+256 744 445 555, +256 708 881 888","haysuganda@gmail.com, info@haysuganda.com",haysuganda.com,Lubowa, Opposite JMRC, Kampala, Uganda.
+HR Desk Solutions Limited,,hrdeske@gmail.com,,
+YASMIN Recruiters Limited,+254 723 648 488,info.yasminrecruiterltd@gmail.com,www.yasminrecruiterltd.co.ke,
+EXCEPTIONAL Broadway Recruiters Limited,,info@broadwayrc.com,,
+MA'AM DOLLY Diaspora Jobs Limited,"+254 204 949 812, +254 114 757 002","info@diaspora.go.ke, kazimajuu@diaspora.go.ke","https://dpa.go.ke/ or https://diaspora.go.ke/","316 Upperhill Chambers, 12th Floor, Second Ngong Avenue, Off Ngong Road, Nairobi or UAP Old Mutual Towers, Upperhill Rd, Upperhill, Nairobi."
+GRAJOWA Enterprises Ltd,"+254 703 780 166, +254 722 830 466","info@https://www.google.com/search?q=grajowa.com, wanguigrace@yahoo.com, grajowa283@gmail.com",https://www.google.com/search?q=grajowa.com,
+MONISA Company Limited,"+254 773 297 072, +254 773 297 155",info@monisacompany.com,https://monisacompany.com/,Jubilee Insurance Exchange Building, Nairobi, Kenya.
+PLOCS Holdings Limited,"+254 111 441 550, +254 208 000 180, +254 743 500 246, +254 740 822 212",info@plocsholdings.co.ke,https://plocsholdings.co.ke/,Blessed House, 3rd Floor, Office 309, Opposite Garden City Mall, Thika Road, Nairobi, Kenya.
+Silver Ray HR Co. Ltd,"+254 722 769 330, +254 714 180 000, +254 726 406 832",info@silverrayhr.com,https://silverrayhr.com/,Haile Selassie Avenue, City Square, Agip House, 4th Floor, Entrance B, Room 445, Nairobi, Kenya.
+SELECTIVE Outsourcing Solutions Ltd,"+254 717 932 818, +254 736 887 668",info@sosrecruit.co.ke,https://www.sosrecruit.co.ke/,Westlands Arcade, Ground Floor, Westlands, Nairobi, Kenya
+SUMMER BIEN International Limited,,info@summerbien.com,https://summerbien.com/,Kenya: Viewpark Towers, Nairobi, Kenya.
+INTERNATIONAL Talents Company Limited,+254 722 710 882,internationaltalents2016@gmail.com,,
+JOYTOM Manpower and Travel Solutions Ltd,"+254 720 642 728, +254 703 558 760","joytommanpower@gmail.com, info@joytommanpower.co.ke",www.joytommanpower.co.ke,
+KENYA Overseas Placement Agency Limited,+254 722 830 000,kenyaoverseasplacement@gmail.com,,
+LEADING Edge Recruitment Agency Limited,+254 722 710 882,leadingedgerecruiters@gmail.com,,
+AL-MIMY Recruitment Agency Limited,+254 721 861 395,almimyagencyltd@gmail.com,,
+Flexi Personnel,+254 709 661 000,cv@flexi-personnel.com,,Blixen Court (Karen Road), Nairobi
+Frank Management Consult Ltd,"+254 20 2724724, +254 745 897 222",info@frank-mgt.com,,
+Hays Kenya (Corporate Advisory LLP),"+254 719 470 567, +254 748 737 994",info@haysadvisory.co.ke,,
+Mahad Manpower Kenya,+254 710 301 878,info@mahadmanpower.ke,,Westlands, Nairobi
+Manpower Services Group,+254 720 765 496,info@manpowerservicesgroup.com,,View Park Towers, Nairobi
+AL-NJESAN Global Agency Limited,,info@nea.go.ke,,
+Summit Recruitment & Search Africa,"+254 713 461 279, +254 738 555 933",info@summitrecruitment-search.com,,
+Vidaj Agencies Limited,+254 775 645 575,info@vidajagencies.com,,Marsabit Plaza, Ngong Road, Nairobi
+Alternate Doors Kenya,+254 716 602 492,recruit@alternatedoors.co.ke,,AACC Building, Westlands, Nairobi
+Crystal Recruitment Ltd,+254 721 771 341,selection@crystalrecruitment.co.ke,,
+Hallmark Recruitment,"+254 711 261 816, +254 795 273 728, +254 20 720 1111",selection@hallmarkrecruitment.com,,Aly's Centre, Westlands, Nairobi
+Skyways Global Services Ltd,"+254 720 000 213, +254 791 888 803","skywaycargo22@gmail.com, skyway@skyway.co.ke",,HEAD OFFICE: 2nd Floor, Optimum House, Skyway Centre. General Waruingi Street, Eastleigh, Nairobi. Opposite Pumwani Maternity Hospital Main Gate.
+Forbes Global Agencies Limited,"+254 769 133 847, +254 769 133 837, +254 769 133 845","marketing@forbesgbl.com, info@forbesgbl.com, fabian@forbesgbl.com",,
+ALSAIAR Travel, Tours & Recruitment Limited,"+254 20 221 4782, +254 722 723 592, +254 731 321 115, +254 727 848 889, +254 731 479 678","mueiz@alsaiar.com, magdi@alsaiar.com",https://www.alsaiar.com/,"Nairobi: Room No. 21, 2nd Floor, Uganda House, Kenyatta Avenue, Nairobi. P.O. Box 71996-00622. Mombasa: 1st Floor, Hidaya Masjid Building, Biashara Street, Opposite Lebanoon Hotel Round"
+HELLO WORK International Co. Ltd,,mwkymani@gmail.com,https://helloworkinternational.com/,
+NASMAMA Services Limited,+254 725 500 000,nasmamaservices@gmail.com,WWW.NASMAMASERVICES.COM,Moktar Daddah Street in Nairobi
+One Stop Career Agency,+254 722 768 674,onestoprecruitmentltd@gmail.com,,
+R & H Ventures Limited,+254 751 368 058,randhhumanresource@gmail.com,https://www.randh.com/,
+KIBOKO Connect Limited,"+254 100 555 666, +254 722 623 393",recruit@kibokoconnect.co.ke,https://www.kibokoconnect.co.ke/,Kalapi Court Complex, Number 7, Waiyaki Way, Westlands, Nairobi – Kenya.
+RECRUITCARE Limited,"+254 722 566 999, +254 725 548 383, +254 702 813 409",recruitcare20@gmail.com,https://bestcarerecruitmentagency.com/,Mpaka Plaza, Westlands, Nairobi, Kenya.
+Sanceda Kenya Limited,+254 728 494 478,sancedafin@gmail.com,,Twiga Towers 605, Nairobi, Kenya
+SALJOS Investments Limited,+254 722 386 428,solomonmutuku86@gmail.com,,
+Soringe Springs Limited,,soringesprings@gmail.com,,
+Starnet Solutions Limited,+254 748 045 286,starnetinternetke@gmail.com,https://sites.google.com/view/starnethub/contact,
+United Manpower Services Limited,"+254 738 661 464, +254 722 505 960, +254 731 673 388",unitedmanpowerservicesltd@gmail.com,https://unitedmanpowerservices.com/,
+Jophiel Global Agency Limited,+254 722 917 273,urielglobalagency@gmail.com,,
+VIKMAC Ajiralink Agency Ltd,+254 750 091 727,vikagencyltd@gmail.com,https://www.vikmacajiralink.com/,
+Elmerry International Connections,"+254 716 480 702, +254 721 264 048, +254 723 603 708",,https://www.elmerryinternational.com/,
+JAMIN Agencies Limited,"+254 722 430 359, +254 794 966 161",,https://jaminagencies.co.ke/,
+Fidelity Connect Limited,+254 746 690 671,,fidelityltd.co.ke,
+Corporate Staffing Services,"+254 718 610 023, +254 797 452 211, +254 798 568 638, +254 796 630 043",,www.corporatestaffing.co.ke,Westlands, Nairobi (Next Stage after MP Shah)
+JAYD Recruitment & Travel Agency Limited,"+254 740 600 100, +254 715 477 222",,https://jiyadgroup.co.ke/,"Nairobi Office: IPS Building, 2nd Floor, Kimathi Street, Nairobi, Kenya. Mombasa Office: Burhan Towers, Mezzanine floor, Mombasa, Kenya."
+NU Health Agency Limited,,,https://nuhealthagency.co.ke/,International House, 2nd floor, Along Mama Ngina Street, Nairobi, Kenya.
+KISCO Manpower International Limited,,,https://www.kisco.co/,
+PRINCESS DANNY Travels and Tours Ltd,,,https://www.primeagency.com/,
+Workforce Three Sixty,,,https://www.workforce360.org/,
+AZAHAR Professional Services Ltd,,,www.azahar.co.ke,
+PARVIN Connections Ltd,,,,1st Floor, Kampus Towers, University way, Nairobi, Kenya

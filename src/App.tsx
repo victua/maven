@@ -18,6 +18,7 @@ import { AnalyticsPage } from './pages/admin/AnalyticsPage';
 import { UsersPage } from './pages/admin/UsersPage';
 import { StaffManagementPage } from './pages/admin/StaffManagementPage';
 import { AgenciesManagementPage } from './pages/admin/AgenciesManagementPage';
+import { AgencyDetailPage } from './pages/admin/AgencyDetailPage';
 import { RoleManagementPage } from './pages/admin/RoleManagementPage';
 import { TalentProfilePage } from './pages/admin/TalentProfilePage';
 import { MatchingPage } from './pages/admin/MatchingPage';
@@ -164,6 +165,12 @@ function AppContent() {
           <Route path="/agencies" element={
             <RouteGuard requiredRole={['admin']} onUnauthorized={handleUnauthorized}>
               <AgenciesManagementPage />
+            </RouteGuard>
+          } />
+
+          <Route path="/agencies/:id" element={
+            <RouteGuard requiredRole={['admin']} onUnauthorized={handleUnauthorized}>
+              <AgencyDetailPage />
             </RouteGuard>
           } />
 
